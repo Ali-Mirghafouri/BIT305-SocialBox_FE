@@ -5,7 +5,7 @@ import Link from "next/link";
 import "./signup.css";
 import Wallet from "@/app/components/wallet/wallet";
 
-export const SignUp = () => {
+export default function SignUp () {
   // State to store form inputs
   const [wallet, setWallet] = useState(false);
   const [formData, setFormData] = useState({
@@ -155,4 +155,3 @@ export const SignUp = () => {
   );
 };
 
-export default SignUp;

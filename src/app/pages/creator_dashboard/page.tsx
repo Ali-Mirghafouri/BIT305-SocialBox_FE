@@ -5,15 +5,14 @@ import "./page.css";
 import Image from "next/image";
 import { img } from "@/app/assets";
 
-export const CreatorDashboard = () => {
+export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
-  const [assets, setAssets] = useState(
-    JSON.parse(localStorage.getItem("assets"))
-  );
+  const [assets, setAssets] = useState<any>();
+  // JSON.parse(localStorage.getItem("assets"))
 
   useEffect(() => {
     try {
-      setAssets(JSON.parse(localStorage.getItem("assets")));
+      // setAssets(JSON.parse(localStorage.getItem("assets")));
     } catch (error) {}
   }, [tab]);
   const tabs = ["Body", "Hats", "Background", "Mouth", "Eyes"];
@@ -31,11 +30,11 @@ export const CreatorDashboard = () => {
     console.log(type);
 
     let onDelete = (index: number) => {
-      let tempAssets = [...assets];
+      let tempAssets: any = [...assets];
       tempAssets.splice(index, 1);
       console.log(tempAssets);
       setAssets(tempAssets);
-      localStorage.setItem("assets", JSON.stringify(tempAssets));
+      // localStorage.setItem("assets", JSON.stringify(tempAssets));
     };
 
     // type === tabs[tab] ? (
@@ -65,6 +64,7 @@ export const CreatorDashboard = () => {
       <div className="flex">
         {tabs.map((t, index) => (
           <div
+            key={index}
             onClick={() => setTab(index)}
             className={
               index === tab ? "dashboard_tab_selected" : "dashboard_tab "
@@ -77,11 +77,16 @@ export const CreatorDashboard = () => {
       <hr />
       <div className="dashboard_container flex">
         {assets?.map(({ name, description, url, type }: any, index: number) => (
-          <Card name={name} url={img.preview} type={type} index={index} />
+          <Card
+            description=""
+            key={name}
+            name={name}
+            url={img.preview}
+            type={type}
+            index={index}
+          />
         ))}
       </div>
     </div>
   );
-};
-
-export default CreatorDashboard;
+}

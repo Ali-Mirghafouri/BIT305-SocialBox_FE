@@ -9,15 +9,8 @@ import { useEffect, useState } from "react";
 export const Header = () => {
   let tabs = ["About", "Dashboard", "Collections", "Whitepaper", "Contact Us"];
   const pathname = usePathname();
-  const [user, setUser] = useState<any>(localStorage.getItem("user") || "");
+  const [user, setUser] = useState<any>("");
 
-  try {
-    user ? setUser(JSON.parse(user)) : "";
-  } catch (error) {}
-  useEffect(() => {
-    setUser(localStorage.getItem("user") || "");
-    console.log();
-  }, [pathname]);
   return (
     <div className="container">
       <div className="flex_align_center inner_container">
@@ -63,7 +56,6 @@ export const Header = () => {
             <div className="user_image"></div>
           )}
           <Link
-            onClick={() => localStorage.removeItem("user")}
             href={user.username ? "/" : "/pages/login"}
             className="username flex_align_center "
           >

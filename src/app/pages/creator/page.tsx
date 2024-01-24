@@ -13,7 +13,7 @@ interface previewProps {
   inputs: any;
 }
 
-function Previews({ setIsShow, setInputs, inputs }: previewProps) {
+const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
   const [files, setFiles] = useState<any>([]);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -83,7 +83,7 @@ function Previews({ setIsShow, setInputs, inputs }: previewProps) {
   );
 }
 
-export const Creator = () => {
+export default function Creator () {
   const [isPreview, setIsPreview] = useState({ state: false });
   const router = useRouter();
   const [inputs, setInputs] = useState({
@@ -112,38 +112,38 @@ export const Creator = () => {
     if (validateForm()) {
       let tempAssets: any = [];
       try {
-        tempAssets = JSON.parse(localStorage.getItem("assets"));
+        // tempAssets = JSON.parse(localStorage.getItem("assets"));
         console.log(tempAssets);
       } catch (error) {
         // console.log(error);
         
       }
       // console.log(inputs);
-      localStorage.removeItem("assets");
-      tempAssets === null
-        ? localStorage.setItem(
-            "assets",
-            JSON.stringify([
-              {
-                name: inputs.name,
-                type: inputs.type,
-                description: inputs.description,
-                url: inputs.url,
-              },
-            ])
-          )
-        : localStorage.setItem(
-            "assets",
-            JSON.stringify([
-              ...tempAssets,
-              {
-                name: inputs.name,
-                type: inputs.type,
-                description: inputs.description,
-                url: inputs.url,
-              },
-            ])
-          );
+      // localStorage.removeItem("assets");
+      // tempAssets === null
+      //   ? localStorage.setItem(
+      //       "assets",
+      //       JSON.stringify([
+      //         {
+      //           name: inputs.name,
+      //           type: inputs.type,
+      //           description: inputs.description,
+      //           url: inputs.url,
+      //         },
+      //       ])
+      //     )
+      //   : localStorage.setItem(
+      //       "assets",
+      //       JSON.stringify([
+      //         ...tempAssets,
+      //         {
+      //           name: inputs.name,
+      //           type: inputs.type,
+      //           description: inputs.description,
+      //           url: inputs.url,
+      //         },
+      //       ])
+      //     );
       router.push("/pages/creator_dashboard");
     }
   };
@@ -273,5 +273,3 @@ export const Creator = () => {
     </div>
   );
 };
-
-export default Creator;

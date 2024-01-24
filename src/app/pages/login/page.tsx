@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const onLogIn = () => {};
 
-export const LogIn = () => {
+export default function LogIn  ()  {
   const router = useRouter();
   const [inputs, setInputs] = useState({
     username: "",
@@ -41,15 +41,15 @@ export const LogIn = () => {
     e.preventDefault();
     if (validateForm()) {
       onLogIn();
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...inputs,
-          wallet: "metaMask",
-          email: "example@gmail.com",
-          userType: "Creator",
-        })
-      );
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify({
+      //     ...inputs,
+      //     wallet: "metaMask",
+      //     email: "example@gmail.com",
+      //     userType: "Creator",
+      //   })
+      // );
       router.push("/pages/creator");
     }
   };
@@ -98,4 +98,3 @@ export const LogIn = () => {
   );
 };
 
-export default LogIn;

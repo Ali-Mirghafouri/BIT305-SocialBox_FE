@@ -7,13 +7,10 @@ import Modal from "react-modal";
 export const Wallet = ({ isOpen, onRequestClose, inputs }: any) => {
   const router = useRouter();
   const handleClick = (e: any) => {
-    localStorage.setItem("user", JSON.stringify({ ...inputs, wallet: e }));
     if (inputs.userType === "Creator") {
-
       router.push("/pages/creator");
     } else {
       router.push("/");
-
     }
   };
   return (
@@ -28,7 +25,7 @@ export const Wallet = ({ isOpen, onRequestClose, inputs }: any) => {
         <div className="flex_center flex_column">
           <h2>Connect your wallet</h2>
           <p className="text_align">
-            If you don't have a wallet, you can select a provider and create one
+            If you don&apos;t have a wallet, you can select a provider and create one
             now.
             <a href="#" className="learn-more">
               Learn more
