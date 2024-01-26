@@ -1,0 +1,151 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./src/app/page.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./src/app/pages/landing_page/landingPage.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+.webLogo {
+  width: 500px;
+  height: 200px;
+  /* margin-right: 186px; */
+}
+
+.text_container {
+  width: 553px;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: Titan One;
+  font-size: 64px;
+  font-weight: 400;
+  background: linear-gradient(92deg, #00e5af 3.33%, #00b6e5 110.69%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: white;
+  /* margin-bottom: 36px; */
+  padding-bottom: 36px;
+}
+
+.desc {
+  color: #f4f4f4;
+  font-family: Titan One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px; 
+  padding-bottom: 36px;
+}
+
+.mint_button {
+  width: 251px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 50px;
+  background: linear-gradient(82deg, #00efa3 -3.24%, #00aeee 102.8%);
+  color: #fff;
+  font-family: Titan One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+}
+
+.landingpage_social {
+  margin-top: 38px;
+}
+.landingpage_social_icon {
+  margin-right: 13px;
+  cursor: pointer;
+}
+
+.landing_card {
+  width: 182px;
+  height: 265px;
+  max-height: 265px;
+  border-radius: 8px;
+  background: #272a34;
+}
+
+.landing_img {
+  width: 182px;
+  height: 124px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.landing_img_title {
+  color: #38f2af;
+  font-family: Oswald;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-left: 8px;
+}
+.landing_card_creator {
+  color: var(--Gray-3, #828282);
+  font-family: Oswald;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 8px;
+}
+.landing_card_type {
+  color: #38f2af;
+  font-family: Oswald;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 8px;
+}
+.landing_card_price {
+  border-radius: 28px;
+  border: 1px solid #38f2af;
+  padding: 4px 12px;
+  box-shadow: 0px 0px 24px 0px rgba(253, 230, 63, 0.1);
+  color: #38f2af;
+  font-family: Oswald;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 8px;
+}
+
+.landing_card hr {
+  margin: none;
+  margin-top: 39px;
+  background: #343741;
+  height: 1px;
+  border: none;
+}
+
+.landing_card_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 44px;
+}
+
+.landing_gap {
+  column-gap: 30px;
+}
+
+.landing {
+  margin: 0px 120px;
+}
+
+.landing_card_bottom_container {
+  height: 30px;
+}
+
