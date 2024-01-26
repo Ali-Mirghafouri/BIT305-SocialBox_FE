@@ -44,7 +44,6 @@ export const LandingPage = () => {
           height={100}
           src={img}
           alt={title}
-          
         />
         <div className="landing_img_title">{title}</div>
         <div className="landing_card_creator">{creator}</div>
@@ -62,7 +61,13 @@ export const LandingPage = () => {
     <div className="flex_center full_height landing">
       <div className="flex full_width">
         <div className="landing_card_container">
-          <Image src={img.WebLogo} alt="web logo" className="webLogo" />
+          <Image
+            src={img.WebLogo}
+            alt="web logo"
+            width={100}
+            height={100}
+            className="webLogo"
+          />
           <div className="flex_center landing_gap">
             {temp.map(({ creator, img, price, title, type }) => (
               <Card
