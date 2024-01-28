@@ -73,29 +73,3 @@ export const checkEmail = async (email: string) => {
   }
 };
 
-export const checkPassword = async (password: string) => {
-  const dbRef = ref(database);
-  let tempValue: any[] = [];
-  await get(child(dbRef, "users"))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        tempValue = [...snapshot.val()];
-        console.log(snapshot.val());
-        console.log(tempValue);
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  let newPass = password;
-  let result = tempValue.find(({ password }) => password === newPass);
-
-  if (result) {
-    return true;
-  } else {
-    return false;
-  }
-};

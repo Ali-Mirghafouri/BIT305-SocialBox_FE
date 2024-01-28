@@ -151,7 +151,7 @@ export default function SignUp() {
         </button>
 
         <div className="signup_signin flex_center">
-          Don’t have an Account?{" "}
+          Already have an Account?{" "}
           <Link className="signup_signin_bold" href={"/pages/login"}>
             Sign in
           </Link>

@@ -4,12 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { img } from "@/app/assets";
 import Image from "next/image";
+import { getCurrentUser, setCurrentUser } from "@/app/API/general";
 import { useEffect, useState } from "react";
 
 export const Header = () => {
   let tabs = ["About", "Dashboard", "Collections", "Whitepaper", "Contact Us"];
   const pathname = usePathname();
-  const [user, setUser] = useState<any>("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    userType: "",
+    username: "",
+    wallet: "",
+  });
+
+  const User = async () => {
+    let tempUser: any = await getCurrentUser();
+    setUser(tempUser);
+  };
+  useEffect(() => {
+    User();
+  }, []);
 
   return (
     <div className="container">

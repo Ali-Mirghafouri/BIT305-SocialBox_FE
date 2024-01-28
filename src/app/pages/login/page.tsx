@@ -4,20 +4,20 @@ import Link from "next/link";
 import "./LogIn.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { checkEmail, checkPassword } from "../../API/signUp";
-
+import { checkEmail } from "../../API/logIn";
+import { setCurrentUser } from "@/app/API/general";
 
 export default function LogIn() {
   const router = useRouter();
   const [inputs, setInputs] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [validationMessage, setValidationMessage] = useState("");
 
   const validateForm = () => {
-    if (!inputs.username.trim()) {
-      setValidationMessage("Username is required");
+    if (!inputs.email.trim()) {
+      setValidationMessage("email is required");
       return false;
     }
     if (inputs.password.length < 6) {
@@ -28,20 +28,21 @@ export default function LogIn() {
     return true;
   };
 
-  // const writeUserData = (userId: string, name: string, password: string) => {
-
-  //   set(ref(database, "users/" + userId), {
-  //     username: name,
-  //     password: password,
-  //   });
-  //   return true;
-  // };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      
-      router.push("/pages/creator");
+      let user = await checkEmail(inputs.email);
+      if (user) {
+        console.log(user);
+        if (user.password === inputs.password) {
+          await setCurrentUser(user);
+          router.push("/pages/creator");
+        } else {
+          setValidationMessage("password is wrong");
+        }
+      } else {
+        setValidationMessage("Email does not exist");
+      }
     }
   };
 
@@ -50,12 +51,12 @@ export default function LogIn() {
       <div className="login_container">
         <div className="login_title">Log in</div>
         <form onSubmit={handleSubmit}>
-          <div className="login_label">User name</div>
+          <div className="login_label">Email</div>
           <input
             className="login_input_username"
-            value={inputs.username}
-            onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
-            placeholder="you name here"
+            value={inputs.email}
+            onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+            placeholder="Email"
           />
           <div className="login_label">Password</div>
           <input
