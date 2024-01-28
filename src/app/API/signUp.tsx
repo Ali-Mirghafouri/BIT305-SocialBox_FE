@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { database } from "../../../firebaseConfig";
 import { ref, set, get, child } from "firebase/database";
 
@@ -9,6 +10,7 @@ export const signUp = async (
   wallet: string
 ) => {
   const dbRef = ref(database);
+  const auth = getAuth();
   let tempValue: any[] = [];
   await get(child(dbRef, "users"))
     .then((snapshot) => {

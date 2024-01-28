@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword  } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -38,4 +39,19 @@ export { database };
 //   });
 //   console.log("done");
 //   return true;
+// };
+
+export const auth = getAuth();
+// export const testSignIn = async () => {
+//   console.log("here");
+//   await createUserWithEmailAndPassword (auth, "ali@gmail.com", "123123")
+//     .then((userCredential) => {
+//       // Signed in
+//       const user = userCredential.user;
+//       // ...
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//     });
 // };

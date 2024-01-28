@@ -1,5 +1,6 @@
 import { database } from "../../../firebaseConfig";
 import { ref, get, child } from "firebase/database";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const checkEmail = async (email: string) => {
   const dbRef = ref(database);
@@ -28,3 +29,5 @@ export const checkEmail = async (email: string) => {
     return false;
   }
 };
+
+

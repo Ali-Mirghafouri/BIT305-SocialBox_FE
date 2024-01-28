@@ -20,7 +20,9 @@ export const Header = () => {
 
   const User = async () => {
     let tempUser: any = await getCurrentUser();
-    setUser(tempUser);
+    if (tempUser) {
+      setUser(tempUser);
+    }
   };
 
   useEffect(() => {
