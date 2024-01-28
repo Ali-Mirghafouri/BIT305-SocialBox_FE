@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { img } from "@/app/assets";
 import Image from "next/image";
-import { getCurrentUser, setCurrentUser } from "@/app/API/general";
+import { getCurrentUser } from "@/app/API/general";
 import { useEffect, useState } from "react";
 
 export const Header = () => {
@@ -13,7 +13,7 @@ export const Header = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    userType: "",
+    type: "",
     username: "",
     wallet: "",
   });
@@ -22,18 +22,19 @@ export const Header = () => {
     let tempUser: any = await getCurrentUser();
     setUser(tempUser);
   };
+
   useEffect(() => {
     User();
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="container">
       <div className="flex_align_center inner_container">
         <div className="flex_align_center">
-          <Link href={user.userType === "Creator" ? "/pages/creator" : "/"}>
+          <Link href={user.type === "Creator" ? "/pages/creator" : "/"}>
             <Image className="logo" src={img.logo} alt="logo" />
           </Link>
-          <Link href={user.userType === "Creator" ? "/pages/creator" : "/"}>
+          <Link href={user.type === "Creator" ? "/pages/creator" : "/"}>
             <div className="brand_name">SocialBox</div>
           </Link>
         </div>
@@ -71,7 +72,7 @@ export const Header = () => {
             <div className="user_image"></div>
           )}
           <Link
-            href={user.username ? "/" : "/pages/login"}
+            href={user.username ? "/pages/profile" : "/pages/login"}
             className="username flex_align_center "
           >
             {user.username ? user.username : "Login / Sign up"}

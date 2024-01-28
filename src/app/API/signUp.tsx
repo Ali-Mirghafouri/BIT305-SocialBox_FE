@@ -34,6 +34,7 @@ export const signUp = async (
       password: password,
       type: type,
       wallet: wallet,
+      profilePic: "",
     });
     console.log(tempValue);
     set(ref(database, "users/"), tempValue);
@@ -72,4 +73,3 @@ export const checkEmail = async (email: string) => {
     return false;
   }
 };
-
