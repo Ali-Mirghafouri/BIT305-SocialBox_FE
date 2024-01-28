@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import "./signup.css";
 import Wallet from "@/app/components/wallet/wallet";
+import { checkEmail } from "../../API/signUp";
 
-export default function SignUp () {
+export default function SignUp() {
   // State to store form inputs
   const [wallet, setWallet] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,12 +58,18 @@ export default function SignUp () {
   };
 
   // Handle form submission
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (validate()) {
       console.log("Form Submitted", formData);
       // Here, you can send data to server or perform other actions
-      setWallet(true);
+      if (await checkEmail(formData.email)) {
+        let tempErrors: any = {};
+        tempErrors.email = "Email already exists";
+        setErrors(tempErrors);
+      } else {
+        setWallet(true);
+      }
     }
   };
 
@@ -150,8 +157,11 @@ export default function SignUp () {
           </Link>
         </div>
       </div>
-      <Wallet isOpen={wallet} onRequestClose={() => setWallet(false)} inputs={formData} />
+      <Wallet
+        isOpen={wallet}
+        onRequestClose={() => setWallet(false)}
+        inputs={formData}
+      />
     </div>
   );
-};
-
+}

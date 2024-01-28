@@ -2,27 +2,18 @@
 
 import Link from "next/link";
 import "./LogIn.css";
-import { useContext, useState } from "react";
-import { MyyStateContext } from "@/app/provider";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { checkEmail, checkPassword } from "../../API/signUp";
 
-const onLogIn = () => {};
 
-export default function LogIn  ()  {
+export default function LogIn() {
   const router = useRouter();
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
   const [validationMessage, setValidationMessage] = useState("");
-  const state = useContext(MyyStateContext);
-  console.log(inputs);
-
-  const onLogIn = () => {
-    state?.setContext({
-      auth: { password: inputs.password, username: inputs.username },
-    });
-  };
 
   const validateForm = () => {
     if (!inputs.username.trim()) {
@@ -37,19 +28,19 @@ export default function LogIn  ()  {
     return true;
   };
 
-  const handleSubmit = (e: any) => {
+  // const writeUserData = (userId: string, name: string, password: string) => {
+
+  //   set(ref(database, "users/" + userId), {
+  //     username: name,
+  //     password: password,
+  //   });
+  //   return true;
+  // };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      onLogIn();
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify({
-      //     ...inputs,
-      //     wallet: "metaMask",
-      //     email: "example@gmail.com",
-      //     userType: "Creator",
-      //   })
-      // );
+      
       router.push("/pages/creator");
     }
   };
@@ -96,5 +87,4 @@ export default function LogIn  ()  {
       </div>
     </div>
   );
-};
-
+}

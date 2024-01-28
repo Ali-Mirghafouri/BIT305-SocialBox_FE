@@ -3,14 +3,38 @@
 import { useRouter } from "next/navigation";
 import "./wallet.css";
 import Modal from "react-modal";
+import { signUp } from "../../API/signUp";
 
-export const Wallet = ({ isOpen, onRequestClose, inputs }: any) => {
+interface walletProps {
+  isOpen: any;
+  onRequestClose: any;
+  inputs: {
+    email: string;
+    username: string;
+    userType: string;
+    password: string;
+    confirmPassword: string;
+  };
+}
+
+export const Wallet = ({ isOpen, onRequestClose, inputs }: walletProps) => {
   const router = useRouter();
-  const handleClick = (e: any) => {
-    if (inputs.userType === "Creator") {
-      router.push("/pages/creator");
+  const handleClick = async (e: any) => {
+    const result = await signUp(
+      inputs.email,
+      inputs.username,
+      inputs.password,
+      inputs.userType,
+      e
+    );
+    if (result) {
+      
+      if (inputs.userType === "Creator") {
+        router.push("/pages/creator");
+      } else {
+        router.push("/");
+      }
     } else {
-      router.push("/");
     }
   };
   return (
@@ -25,8 +49,8 @@ export const Wallet = ({ isOpen, onRequestClose, inputs }: any) => {
         <div className="flex_center flex_column">
           <h2>Connect your wallet</h2>
           <p className="text_align">
-            If you don&apos;t have a wallet, you can select a provider and create one
-            now.
+            If you don&apos;t have a wallet, you can select a provider and
+            create one now.
             <a href="#" className="learn-more">
               Learn more
             </a>
