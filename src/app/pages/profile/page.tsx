@@ -3,18 +3,11 @@
 import { img } from "@/app/assets";
 import Image from "next/image";
 import "./profile.css";
-import { setCurrentUser } from "@/app/API/general";
 import Link from "next/link";
 
 export default function Profile() {
   const onLogOut = () => {
-    setCurrentUser({
-      email: "",
-      password: "",
-      type: "",
-      username: "",
-      wallet: "",
-    });
+    localStorage.removeItem("currentUser");
   };
 
   return (

@@ -12,6 +12,7 @@ export const signUp = async (
   const dbRef = ref(database);
   const auth = getAuth();
   let tempValue: any[] = [];
+
   await get(child(dbRef, "users"))
     .then((snapshot) => {
       if (snapshot.exists()) {
@@ -30,16 +31,32 @@ export const signUp = async (
   let result = tempValue.find(({ email }) => email === newEmail);
   console.log(result);
   if (!result) {
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        username: name,
+        ID: tempValue.length,
+        email: email,
+        password: password,
+        type: type,
+        wallet: wallet,
+        profilePic: "",
+        assets: "",
+      })
+    );
     tempValue.push({
+      ID: tempValue.length,
       username: name,
       email: email,
       password: password,
       type: type,
       wallet: wallet,
       profilePic: "",
+      assets: "",
     });
     console.log(tempValue);
-    set(ref(database, "users/"), tempValue);
+    await set(ref(database, "users/"), tempValue);
+
     console.log("user sign up success");
     return true;
   } else {
@@ -70,7 +87,7 @@ export const checkEmail = async (email: string) => {
   console.log(result);
 
   if (result) {
-    return true;
+    return result;
   } else {
     return false;
   }

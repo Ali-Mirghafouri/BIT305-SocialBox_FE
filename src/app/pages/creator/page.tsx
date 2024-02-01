@@ -6,6 +6,7 @@ import "./creator.css";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/navigation";
+import { uploadAsset } from "@/app/API/creator";
 
 interface previewProps {
   setIsShow: any;
@@ -17,12 +18,6 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
   const [files, setFiles] = useState<any>([]);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-      // acceptedFiles.map((file) =>
-      //   setInputs({
-      //     ...inputs,
-      //     url: file.preview,
-      //   })
-      // );
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -81,9 +76,9 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
       )}
     </section>
   );
-}
+};
 
-export default function Creator () {
+export default function Creator() {
   const [isPreview, setIsPreview] = useState({ state: false });
   const router = useRouter();
   const [inputs, setInputs] = useState({
@@ -107,17 +102,11 @@ export default function Creator () {
     return true;
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (validateForm()) {
-      let tempAssets: any = [];
       try {
-        // tempAssets = JSON.parse(localStorage.getItem("assets"));
-        console.log(tempAssets);
-      } catch (error) {
-        // console.log(error);
-        
-      }
+        // console.log(tempAssets);
+      } catch (error) {}
       // console.log(inputs);
       // localStorage.removeItem("assets");
       // tempAssets === null
@@ -144,11 +133,10 @@ export default function Creator () {
       //         },
       //       ])
       //     );
-      router.push("/pages/creator_dashboard");
+      // router.push("/pages/creator_dashboard");
+      uploadAsset(inputs);
     }
   };
-
-  // console.log(isPreview.state);
 
   return (
     <div className="flex_center full_height creator_page_border">
@@ -172,7 +160,7 @@ export default function Creator () {
                     <div className="full_width creator_mr18">
                       <div className="login_label">NFT name</div>
                       <input
-                        className="login_input_username"
+                        className="creator_input_username"
                         value={inputs.name}
                         onChange={(e) =>
                           setInputs({ ...inputs, name: e.target.value })
@@ -208,7 +196,7 @@ export default function Creator () {
                       setInputs({ ...inputs, description: e.target.value })
                     }
                     value={inputs.description}
-                    className="login_input_password"
+                    className="creator_input_password"
                     placeholder="Enter your NFT description"
                   />
                   {validationMessage && (
@@ -272,4 +260,4 @@ export default function Creator () {
       </div>
     </div>
   );
-};
+}

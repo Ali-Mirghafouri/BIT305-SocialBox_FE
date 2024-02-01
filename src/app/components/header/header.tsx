@@ -1,4 +1,5 @@
 "use client";
+
 import "./header.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 export const Header = () => {
   let tabs = ["About", "Dashboard", "Collections", "Whitepaper", "Contact Us"];
   const pathname = usePathname();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,7 +21,7 @@ export const Header = () => {
   });
 
   const User = async () => {
-    let tempUser: any = await getCurrentUser();
+    let tempUser: any = { ...(await getCurrentUser()) };
     if (tempUser) {
       setUser(tempUser);
     }
@@ -27,6 +29,7 @@ export const Header = () => {
 
   useEffect(() => {
     User();
+    console.log("indeed");
   }, [pathname]);
 
   return (
