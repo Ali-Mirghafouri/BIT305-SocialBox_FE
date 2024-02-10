@@ -18,13 +18,16 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
   const [files, setFiles] = useState<any>([]);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
+      setInputs({
+        ...inputs,
+        url: acceptedFiles[0],
+      });
+      setFiles([
+        {
+          ...acceptedFiles[0],
+          preview: URL.createObjectURL(acceptedFiles[0]),
+        },
+      ]);
     },
     onDragEnter: () => undefined,
     onDragLeave: () => undefined,
@@ -53,6 +56,8 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
   });
 
   useEffect(() => {
+    // console.log(files[0]);
+
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     files.length !== 0 ? setIsShow({ state: true }) : setIsShow(false);
 
@@ -81,7 +86,7 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
 export default function Creator() {
   const [isPreview, setIsPreview] = useState({ state: false });
   const router = useRouter();
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<any>({
     description: "",
     name: "",
     type: "",
@@ -103,38 +108,12 @@ export default function Creator() {
   };
 
   const handleSubmit = () => {
+    // console.log(inputs);
     if (validateForm()) {
       try {
-        // console.log(tempAssets);
       } catch (error) {}
-      // console.log(inputs);
-      // localStorage.removeItem("assets");
-      // tempAssets === null
-      //   ? localStorage.setItem(
-      //       "assets",
-      //       JSON.stringify([
-      //         {
-      //           name: inputs.name,
-      //           type: inputs.type,
-      //           description: inputs.description,
-      //           url: inputs.url,
-      //         },
-      //       ])
-      //     )
-      //   : localStorage.setItem(
-      //       "assets",
-      //       JSON.stringify([
-      //         ...tempAssets,
-      //         {
-      //           name: inputs.name,
-      //           type: inputs.type,
-      //           description: inputs.description,
-      //           url: inputs.url,
-      //         },
-      //       ])
-      //     );
-      // router.push("/pages/creator_dashboard");
       uploadAsset(inputs);
+      router.push("/pages/creator_dashboard");
     }
   };
 

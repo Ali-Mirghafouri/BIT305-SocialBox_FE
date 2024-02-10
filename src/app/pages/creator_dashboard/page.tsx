@@ -3,17 +3,19 @@
 import { useEffect, useState } from "react";
 import "./page.css";
 import Image from "next/image";
-import { img } from "@/app/assets";
+import { getAssets } from "@/app/API/creator";
 
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
   const [assets, setAssets] = useState<any>();
-  // JSON.parse(localStorage.getItem("assets"))
 
   useEffect(() => {
-    try {
-      // setAssets(JSON.parse(localStorage.getItem("assets")));
-    } catch (error) {}
+    let assets = getAssets();
+    assets.then((res) => (res === "" ? setAssets([]) : setAssets(res)));
+  }, []);
+  useEffect(() => {
+    let assets = getAssets();
+    assets.then((res) => (res === "" ? setAssets([]) : setAssets(res)));
   }, [tab]);
   const tabs = ["Body", "Hats", "Background", "Mouth", "Eyes"];
 
@@ -26,21 +28,19 @@ export default function CreatorDashboard() {
   }
 
   const Card = ({ url, name, description, type, index }: cardProps) => {
-    console.log(type === tabs[tab]);
-    console.log(type);
 
     let onDelete = (index: number) => {
-      let tempAssets: any = [...assets];
-      tempAssets.splice(index, 1);
-      console.log(tempAssets);
-      setAssets(tempAssets);
-      // localStorage.setItem("assets", JSON.stringify(tempAssets));
     };
 
-    // type === tabs[tab] ? (
     return type === tabs[tab] ? (
       <div key={name} className="dashboard_card">
-        <Image className="dashboard_img" src={url} alt={name} />
+        <Image
+          width={160}
+          height={160}
+          className="dashboard_img"
+          src={url}
+          alt={name}
+        />
         <div className="dashboard_img_title">{name}</div>
         <div className="dashboard_card_delete_container">
           <button
@@ -54,9 +54,6 @@ export default function CreatorDashboard() {
     ) : (
       <></>
     );
-    // ) : (
-    //   <></>
-    // );
   };
 
   return (
@@ -81,7 +78,7 @@ export default function CreatorDashboard() {
             description=""
             key={name}
             name={name}
-            url={img.preview}
+            url={url}
             type={type}
             index={index}
           />
