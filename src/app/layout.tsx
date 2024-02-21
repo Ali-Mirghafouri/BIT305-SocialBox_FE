@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link href="./output.css" rel="stylesheet" />
+        {/* <link href="./output.css" rel="stylesheet" /> */}
         <link
           href="https://fonts.googleapis.com/css?family=Poppins"
           rel="stylesheet"

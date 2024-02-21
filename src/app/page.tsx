@@ -1,3 +1,5 @@
+"use client"
+
 import "./page.css";
 import { LandingPage } from "./pages/landing_page";
 

@@ -31,7 +31,7 @@
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
-  line-height: 36px; 
+  line-height: 36px;
   padding-bottom: 36px;
 }
 
@@ -136,6 +136,7 @@
 
 .landing {
   margin: 0px 120px;
+  padding-top: 120px;
 }
 
 .landing_card_bottom_container {
