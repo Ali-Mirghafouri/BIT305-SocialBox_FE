@@ -95,6 +95,11 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 a {
   color: inherit;
   text-decoration: none;
@@ -110,7 +115,7 @@ html {
 }
 body {
   height: 100%;
-  background-image: url(./assets/images/image\ 1.png);
+  background-image: url(./assets/images/mainBG.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

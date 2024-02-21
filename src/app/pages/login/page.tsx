@@ -36,7 +36,22 @@ export default function LogIn() {
         console.log(user);
         if (user.password === inputs.password) {
           await setCurrentUser(user);
-          router.push("/pages/creator");
+
+          switch (user.type) {
+            case "Admin":
+              router.push("/pages/admin");
+
+              break;
+            case "Creator":
+              router.push("/pages/creator");
+
+              break;
+            case "Consumer":
+              break;
+
+            default:
+              break;
+          }
         } else {
           setValidationMessage("password is wrong");
         }

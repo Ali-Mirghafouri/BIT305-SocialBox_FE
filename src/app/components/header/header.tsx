@@ -29,8 +29,9 @@ export const Header = () => {
 
   useEffect(() => {
     User();
-    console.log("indeed");
+    console.log(window.location.pathname);
   }, [pathname]);
+ 
 
   return (
     <div className="container">
