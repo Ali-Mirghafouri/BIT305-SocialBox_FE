@@ -32,7 +32,7 @@ export const Wallet = ({ isOpen, onRequestClose, inputs }: walletProps) => {
       if (inputs.userType === "Creator") {
         router.push("/pages/creator");
       } else {
-        router.push("/");
+        router.push("/pages/buyerHomePage");
       }
     } else {
     }

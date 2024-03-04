@@ -47,9 +47,7 @@ export default function LogIn() {
 
               break;
             case "Consumer":
-              break;
-
-            default:
+              router.push("/pages/buyerHomePage");
               break;
           }
         } else {
