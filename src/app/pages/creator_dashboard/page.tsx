@@ -17,7 +17,7 @@ export default function CreatorDashboard() {
     let assets = getAssets();
     assets.then((res) => (res === "" ? setAssets([]) : setAssets(res)));
   }, [tab]);
-  const tabs = ["Body", "Hats", "Background", "Mouth", "Eyes"];
+  const tabs = ["Face", "Eyes", "Hair", "Accessories"];
 
   interface cardProps {
     name: string;

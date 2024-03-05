@@ -160,11 +160,10 @@ export default function Creator() {
                         <option value="" disabled>
                           Select your image type
                         </option>
-                        <option value="Background">Background</option>
-                        <option value="Hats">hat</option>
-                        <option value="Body">body</option>
+                        <option value="Face">Face</option>
                         <option value="Eyes">Eyes</option>
-                        <option value="Mouth">Mouth</option>
+                        <option value="Hair">Hair</option>
+                        <option value="Accessories">Accessories</option>
                       </select>
                     </div>
                   </div>
