@@ -22,7 +22,7 @@
   padding: 16px;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 115px;
+  column-gap: 110px;
   row-gap: 8px;
   box-sizing: border-box;
 }
@@ -95,6 +95,7 @@
   height: min-content;
   margin-top: auto;
   margin-bottom: auto;
+  cursor: pointer;
 }
 .buyerPage_filter_button_active {
   background-color: #373943;
@@ -116,4 +117,20 @@
   font-size: 14px;
   font-family: Oswald;
   color: white;
+}
+
+.buyerPage_page_num {
+  font-size: 14px;
+  font-family: Oswald;
+  color: white;
+  padding: 0px 8px;
+}
+.buyerPage_page_num_active {
+  font-size: 14px;
+  font-family: Oswald;
+  color: #38f2af;
+  padding: 0px 8px;
+}
+.buyerPage_bottom_container {
+    margin-top: 16px;
 }
