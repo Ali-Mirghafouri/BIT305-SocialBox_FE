@@ -90,13 +90,14 @@ export const LandingPage = () => {
             Eden Pass! Earn USDC based on your Eden Battle Pass. No risk, no
             reward. So just do it! NFA!
           </div>
-          {/* <Link href={"/pages/login"}> */}
-          {/* <button onClick={() => ConnectButton()} className="mint_button">
+          <Link href={"/pages/login"}>
+          <button onClick={() => ConnectButton()} className="mint_button">
             Mint Now
-          </button> */}
-          <w3m-button label="hello" size="md" balance="show" />
-          <w3m-connect-button />
-          {/* </Link> */}
+          </button>
+          {/* <w3m-button label="hello" size="md" balance="show" />
+          <w3m-connect-button /> */}
+          
+          </Link>
           <div className="flex landingpage_social">
             <Image
               className="landingpage_social_icon"

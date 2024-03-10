@@ -56,7 +56,7 @@ export default function RootLayout({
         ></link>
       </head>
       <body className={inter.className}>
-        <Context initialState={initialState}>{children}</Context>
+        <ContextProvider initialState={initialState}>{children}</ContextProvider>
       </body>
     </html>
   );
