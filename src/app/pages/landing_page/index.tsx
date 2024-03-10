@@ -2,6 +2,7 @@ import { img } from "@/app/assets";
 import "./landingPage.css";
 import Image from "next/image";
 import Link from "next/link";
+import ConnectButton from "@/app/components/web3/web3";
 
 export const LandingPage = () => {
   let temp = [
@@ -89,9 +90,11 @@ export const LandingPage = () => {
             Eden Pass! Earn USDC based on your Eden Battle Pass. No risk, no
             reward. So just do it! NFA!
           </div>
-          <Link href={"/pages/login"}>
-            <button className="mint_button">Mint Now</button>
-          </Link>
+          {/* <Link href={"/pages/login"}> */}
+          <button onClick={() => ConnectButton} className="mint_button">
+            Mint Now
+          </button>
+          {/* </Link> */}
           <div className="flex landingpage_social">
             <Image
               className="landingpage_social_icon"
