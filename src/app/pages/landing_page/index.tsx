@@ -91,9 +91,11 @@ export const LandingPage = () => {
             reward. So just do it! NFA!
           </div>
           {/* <Link href={"/pages/login"}> */}
-          <button onClick={() => ConnectButton} className="mint_button">
+          {/* <button onClick={() => ConnectButton()} className="mint_button">
             Mint Now
-          </button>
+          </button> */}
+          <w3m-button label="hello" size="md" balance="show" />
+          <w3m-connect-button />
           {/* </Link> */}
           <div className="flex landingpage_social">
             <Image
