@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = 'force-dynamic'
+
 
 import Link from "next/link";
 import "./LogIn.css";
@@ -110,4 +112,3 @@ export default function LogIn({
 }
 
 
-export const dynamic = "force-dynamic";

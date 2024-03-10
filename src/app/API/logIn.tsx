@@ -1,3 +1,4 @@
+
 import { database } from "../../../firebaseConfig";
 import { ref, get, child } from "firebase/database";
 
@@ -28,5 +29,3 @@ export const checkEmail = async (email: string) => {
     return false;
   }
 };
-
-

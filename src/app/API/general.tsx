@@ -1,3 +1,4 @@
+
 interface setCurrentUser {
   email: string;
   username: string;
