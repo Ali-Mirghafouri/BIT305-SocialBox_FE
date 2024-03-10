@@ -7,15 +7,15 @@ import { getAssets } from "@/app/API/creator";
 
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
-  const [assets, setAssets] = useState<any>();
+  const [assets, setAssets] = useState<any>([]);
 
   useEffect(() => {
     let assets = getAssets();
-    assets.then((res) => (res === "" ? setAssets([]) : setAssets(res)));
+    assets.then((res) => (res === "" ? setAssets("") : setAssets(res)));
   }, []);
   useEffect(() => {
     let assets = getAssets();
-    assets.then((res) => (res === "" ? setAssets([]) : setAssets(res)));
+    assets.then((res) => (res === "" ? setAssets("") : setAssets(res)));
   }, [tab]);
   const tabs = ["Face", "Eyes", "Hair", "Accessories"];
 
@@ -28,9 +28,7 @@ export default function CreatorDashboard() {
   }
 
   const Card = ({ url, name, description, type, index }: cardProps) => {
-
-    let onDelete = (index: number) => {
-    };
+    let onDelete = (index: number) => {};
 
     return type === tabs[tab] ? (
       <div key={name} className="dashboard_card">
@@ -73,16 +71,20 @@ export default function CreatorDashboard() {
       </div>
       <hr />
       <div className="dashboard_container flex">
-        {assets?.map(({ name, description, url, type }: any, index: number) => (
-          <Card
-            description=""
-            key={name}
-            name={name}
-            url={url}
-            type={type}
-            index={index}
-          />
-        ))}
+        {assets !== "" ? (
+          assets.map(({ name, description, url, type }: any, index: number) => (
+            <Card
+              description=""
+              key={name}
+              name={name}
+              url={url}
+              type={type}
+              index={index}
+            />
+          ))
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );
