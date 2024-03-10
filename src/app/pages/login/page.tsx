@@ -7,7 +7,13 @@ import { useRouter } from "next/navigation";
 import { checkEmail } from "../../API/logIn";
 import { setCurrentUser } from "@/app/API/general";
 
-export default function LogIn() {
+export default function LogIn({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const router = useRouter();
   const [inputs, setInputs] = useState({
     email: "",
@@ -102,3 +108,6 @@ export default function LogIn() {
     </div>
   );
 }
+
+
+export const dynamic = "force-dynamic";

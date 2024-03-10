@@ -144,8 +144,14 @@ export default function Admin() {
       <div className={styles.container}>
         <div className={styles.width}>
           <div className={styles.card_container}>
-            {CardList.map(({ title, desc, value, alt }) => (
-              <Card title={title} desc={desc} value={value} alt={alt} />
+            {CardList.map(({ title, desc, value, alt }, index) => (
+              <Card
+                title={title}
+                desc={desc}
+                value={value}
+                alt={alt}
+                key={title + index}
+              />
             ))}
           </div>
           <hr style={{ marginBottom: "20px" }} />
@@ -189,8 +195,8 @@ export default function Admin() {
         <div className={styles.creator}>
           <div className={styles.creator_title}>Creators of the week</div>
           <div className={styles.creator_card_container}>
-            {CreatorList.map(({ img, sales, name }) => (
-              <Creator img={img} sales={sales} name={name} />
+            {CreatorList.map(({ img, sales, name }, index) => (
+              <Creator img={img} sales={sales} name={name} key={name + index} />
             ))}
           </div>
         </div>

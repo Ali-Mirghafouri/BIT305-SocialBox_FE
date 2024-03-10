@@ -599,6 +599,7 @@ export default function BuyerHomePage() {
             if (index === 1) {
               return (
                 <div
+                  key={index + "ye"}
                   className={
                     index === activePage
                       ? "buyerPage_page_num_active"
@@ -612,6 +613,7 @@ export default function BuyerHomePage() {
             if (index < 4 && activePage < 4 && index !== 1) {
               return (
                 <div
+                  key={index + "ye"}
                   className={
                     index === activePage
                       ? "buyerPage_page_num_active"
@@ -624,7 +626,7 @@ export default function BuyerHomePage() {
             }
 
             if (index !== pageNum && index === 4 && activePage < 4) {
-              return <div>...</div>;
+              return <div key={index + "ye"}>...</div>;
             }
             if (
               index !== pageNum &&
@@ -634,6 +636,7 @@ export default function BuyerHomePage() {
             ) {
               return (
                 <div
+                  key={index + "ye"}
                   className={
                     index === activePage
                       ? "buyerPage_page_num_active"
@@ -650,12 +653,13 @@ export default function BuyerHomePage() {
               (index == activePage + 2 || index == activePage - 2) &&
               index !== pageNum
             ) {
-              return <div>...</div>;
+              return <div key={index + "ye"}>...</div>;
             }
 
             if (index === pageNum) {
               return (
                 <div
+                  key={index + "ye"}
                   className={
                     index === activePage
                       ? "buyerPage_page_num_active"
@@ -698,6 +702,7 @@ export default function BuyerHomePage() {
           </div>
           {num.map((index) => (
             <div
+              key={index + "yes"}
               className={
                 index === activePage
                   ? "buyerPage_page_num_active"
@@ -743,13 +748,21 @@ export default function BuyerHomePage() {
         {/* <div className="buyerPage_title">Cryptographs</div> */}
         <div className="buyerPage_filter">
           {filters.map((text, index) => (
-            <Filter text={text} index={index} />
+            <Filter text={text} index={index} key={text + index} />
           ))}
         </div>
         <div className="buyerPage_imgList">
-          {selectedAssets.map(({ author, img, price, title }: CardProps) => (
-            <Card author={author} img={img} price={price} title={title} />
-          ))}
+          {selectedAssets.map(
+            ({ author, img, price, title }: CardProps, index: any) => (
+              <Card
+                author={author}
+                img={img}
+                price={price}
+                title={title}
+                key={title + index}
+              />
+            )
+          )}
         </div>
         <div className="flex buyerPage_bottom_container">
           <div className="buyerPage_result">
