@@ -6,6 +6,7 @@ import { img } from "@/app/assets";
 import { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Link from "next/link";
 
 interface CardProps {
   title: string;
@@ -553,25 +554,27 @@ export default function BuyerHomePage() {
 
   function Card({ title, img, price, author }: CardProps) {
     return (
-      <div>
-        <Image
-          src={img}
-          alt="../../assets/images/neon.png"
-          width={250}
-          height={150}
-          className="buyerPage_card_img"
-        />
-        <div className="buyerPage_card">
-          <div className="buyerPage_card_title">{title}</div>
-          <div className="buyerPage_card_author">{author}</div>
-          <hr />
-          <div className="flex">
-            <div className="buyerPage_card_bidding">Open bidding</div>
-            <div className="flex_grow" />
-            <div className="buyerPage_card_price">{price}</div>
+      <Link href={"/pages/product"}>
+        <div>
+          <Image
+            src={img}
+            alt="../../assets/images/neon.png"
+            width={250}
+            height={150}
+            className="buyerPage_card_img"
+          />
+          <div className="buyerPage_card">
+            <div className="buyerPage_card_title">{title}</div>
+            <div className="buyerPage_card_author">{author}</div>
+            <hr />
+            <div className="flex">
+              <div className="buyerPage_card_bidding">Open bidding</div>
+              <div className="flex_grow" />
+              <div className="buyerPage_card_price">{price}</div>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 

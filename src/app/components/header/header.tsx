@@ -9,9 +9,6 @@ import { getCurrentUser } from "@/app/API/general";
 import { useEffect, useState } from "react";
 
 export const Header = () => {
-  let tabs = ["About", "Dashboard", "Collections", "Whitepaper", "Contact Us"];
-  const pathname = usePathname();
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,6 +16,15 @@ export const Header = () => {
     username: "",
     wallet: "",
   });
+  let tabs = ["About", "Dashboard", "Collections", "Whitepaper", "Contact Us"];
+  let tabsLink = [
+    "",
+    user.type === "Creator" ? "/pages/creator_dashboard" : "",
+    "",
+    "",
+    "",
+  ];
+  const pathname = usePathname();
 
   const User = async () => {
     let tempUser: any = { ...(await getCurrentUser()) };
@@ -31,7 +37,6 @@ export const Header = () => {
     User();
     console.log(window.location.pathname);
   }, [pathname]);
- 
 
   return (
     <div className="container">
@@ -45,8 +50,9 @@ export const Header = () => {
           </Link>
         </div>
         <div className="flex_grow" />
-        {tabs.map((tab) => (
-          <div
+        {tabs.map((tab, index) => (
+          <Link
+            href={tabsLink[index]}
             style={{
               visibility:
                 pathname === "/pages/login" || pathname === "/pages/signUp"
@@ -57,7 +63,7 @@ export const Header = () => {
             className="tab "
           >
             {tab}
-          </div>
+          </Link>
         ))}
         <div
           style={{
