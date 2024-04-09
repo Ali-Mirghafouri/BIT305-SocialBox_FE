@@ -78,3 +78,15 @@ export const getAssets = async () => {
 
   return tempVal;
 };
+
+export const removeAsset = async (assetID: number) => {
+  let assets: any = await getAssets();
+  console.log(assets);
+  assets.splice(assetID, 1);
+  console.log(assets);
+
+  const updates: any = {};
+  updates["users/" + currentUser.ID + "/assets"] = assets;
+
+  update(ref(database), updates);
+};

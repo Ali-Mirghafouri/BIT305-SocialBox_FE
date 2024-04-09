@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import "./page.css";
 import Image from "next/image";
 import { getAssets } from "@/app/API/creator";
+import axios from "axios";
+import { removeAsset } from "@/app/API/creator";
 
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
+  const [ref, setRef] = useState(0);
   const [assets, setAssets] = useState<any>([]);
 
   useEffect(() => {
@@ -16,8 +19,9 @@ export default function CreatorDashboard() {
   useEffect(() => {
     let assets = getAssets();
     assets.then((res) => (res === "" ? setAssets("") : setAssets(res)));
-  }, [tab]);
+  }, [tab, ref]);
   const tabs = ["Face", "Eyes", "Hair", "Accessories"];
+  const imgTabs = ["face", "eye", "hair", "accessory"];
 
   interface cardProps {
     name: string;
@@ -28,9 +32,12 @@ export default function CreatorDashboard() {
   }
 
   const Card = ({ url, name, description, type, index }: cardProps) => {
-    let onDelete = (index: number) => {};
+    let onDelete = async () => {
+      await removeAsset(index);
+      setRef(ref + 1);
+    };
 
-    return type === tabs[tab] ? (
+    return type === imgTabs[tab] ? (
       <div key={name} className="dashboard_card">
         <Image
           width={160}
@@ -42,8 +49,8 @@ export default function CreatorDashboard() {
         <div className="dashboard_img_title">{name}</div>
         <div className="dashboard_card_delete_container">
           <button
-            onClick={() => onDelete(index)}
-            className="dashboard_mint_button"
+            onClick={() => onDelete()}
+            className="dashboard_delete_button"
           >
             Delete
           </button>
@@ -52,6 +59,22 @@ export default function CreatorDashboard() {
     ) : (
       <></>
     );
+  };
+
+  let mint = async (imageData: any) => {
+    console.log(imageData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/save-images",
+        imageData
+      );
+      console.log(response.data);
+      // Handle success
+    } catch (error) {
+      console.error("Failed to save images:", error);
+      // Handle errors
+    }
   };
 
   return (
@@ -83,8 +106,13 @@ export default function CreatorDashboard() {
             />
           ))
         ) : (
-          <div></div>
+          <div>no images</div>
         )}
+      </div>
+      <div className="dashboard_mint_button_container">
+        <button onClick={() => mint(assets)} className="dashboard_mint_button">
+          Mint
+        </button>
       </div>
     </div>
   );
