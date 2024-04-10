@@ -10,7 +10,7 @@ import { removeAsset } from "@/app/API/creator";
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
   const [ref, setRef] = useState(0);
-  const [assets, setAssets] = useState<any>([]);
+  const [assets, setAssets] = useState<any>("");
 
   useEffect(() => {
     let assets = getAssets();
@@ -30,6 +30,9 @@ export default function CreatorDashboard() {
     url: any;
     index: number;
   }
+
+console.log(assets);
+
 
   const Card = ({ url, name, description, type, index }: cardProps) => {
     let onDelete = async () => {
@@ -94,7 +97,7 @@ export default function CreatorDashboard() {
       </div>
       <hr />
       <div className="dashboard_container flex">
-        {assets !== "" ? (
+        {assets !== "" && assets ? (
           assets.map(({ name, description, url, type }: any, index: number) => (
             <Card
               description=""

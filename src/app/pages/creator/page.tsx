@@ -43,8 +43,8 @@ const Previews = ({ setIsShow, setInputs, inputs }: previewProps) => {
             alt="preview"
             src={file.preview}
             className="creator_img"
-            width={100}
-            height={100}
+            width={400}
+            height={400}
             // Revoke data uri after image is loaded
             onLoad={() => {
               URL.revokeObjectURL(file.preview);

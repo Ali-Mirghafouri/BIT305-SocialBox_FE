@@ -86,7 +86,7 @@ export const removeAsset = async (assetID: number) => {
   console.log(assets);
 
   const updates: any = {};
-  updates["users/" + currentUser.ID + "/assets"] = assets;
+  updates["users/" + currentUser.ID + "/assets"] = assets ? assets : "";
 
   update(ref(database), updates);
 };
