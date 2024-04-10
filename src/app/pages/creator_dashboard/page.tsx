@@ -6,12 +6,96 @@ import Image from "next/image";
 import { getAssets } from "@/app/API/creator";
 import axios from "axios";
 import { removeAsset } from "@/app/API/creator";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
+import "../../output.css";
+import Link from "next/link";
+import { CollectionInputs } from "./form";
+import { getCurrentUser } from "@/app/API/general";
+import { setCollection } from "@/app/API/collection";
 
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
   const [ref, setRef] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [modal, setModal] = useState(false);
   const [assets, setAssets] = useState<any>("");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [inputs, setInputs] = useState<any>({
+    name: "",
+    iteration: 1,
+  });
+  const [validationMessage, setValidationMessage] = useState("");
+
+  const validateForm = () => {
+    if (!inputs.name.trim()) {
+      setValidationMessage("name is required");
+      return false;
+    }
+    setValidationMessage("");
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    console.log(assets);
+
+    if (validateForm()) {
+      let currentUser = await getCurrentUser();
+      setModal(false);
+      try {
+        setIsLoading(true);
+        try {
+          const response = await axios.post(
+            "http://localhost:4000/save-images",
+            { assets: assets, iteration: inputs.iteration }
+          );
+          let res = JSON.parse(response.data.data);
+          console.log(res);
+          // let res = [
+          //   {
+          //     transaction: "hash",
+          //     name: "mint.name",
+          //     img_url: "meta.file_url",
+          //   },
+          //   {
+          //     transaction: "hash",
+          //     name: "mint.name",
+          //     img_url: "meta.file_url",
+          //   },
+          //   {
+          //     transaction: "hash",
+          //     name: "mint.name",
+          //     img_url: "meta.file_url",
+          //   },
+          // ];
+          let tempVal = {
+            collectionName: inputs.name,
+            NFTs: [...res],
+            creator: currentUser.username,
+            creatorEmail: currentUser.email,
+          };
+
+          setCollection(tempVal);
+          // console.table(JSON.parse(response.data));
+          // Handle success
+        } catch (error) {
+          console.error("Failed to save images:", error);
+          // Handle errors
+        }
+        setIsLoading(false);
+        onOpen();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   const LoadingScreen = () => (
     <div
@@ -40,6 +124,8 @@ export default function CreatorDashboard() {
       ></div>
     </div>
   );
+
+  console.log("relode");
 
   useEffect(() => {
     let assets = getAssets();
@@ -90,26 +176,18 @@ export default function CreatorDashboard() {
     );
   };
 
-  let mint = async (imageData: any) => {
-    console.log(imageData);
-    setIsLoading(true);
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/save-images",
-        imageData
-      );
-      console.log(JSON.parse(response.data));
-      // Handle success
-    } catch (error) {
-      console.error("Failed to save images:", error);
-      // Handle errors
-    }
-    setIsLoading(false);
-  };
-
   return (
     <div className="dashboard">
       {isLoading && <LoadingScreen />}
+      {modal && (
+        <CollectionInputs
+          assets={assets}
+          inputs={inputs}
+          setInputs={setInputs}
+          setModal={setModal}
+          mint={handleSubmit}
+        />
+      )}
       <div className="flex">
         {tabs.map((t, index) => (
           <div
@@ -141,10 +219,40 @@ export default function CreatorDashboard() {
         )}
       </div>
       <div className="dashboard_mint_button_container">
-        <button onClick={() => mint(assets)} className="dashboard_mint_button">
+        <button
+          onClick={() => setModal(true)}
+          className="dashboard_mint_button"
+        >
           Mint
         </button>
       </div>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="dashboard_modal"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalBody className="justify-center">
+                <p className="text-background mt-2">10/10 images minted</p>
+                <p className="text-background">Mint Complete</p>
+                <p className="text-background">
+                  check{" "}
+                  <Link
+                    className="dashboard_modal_link"
+                    href={"https://opensea.io/collection/nftport-xyz-v5"}
+                  >
+                    {" "}
+                    this link
+                  </Link>
+                </p>
+              </ModalBody>
+              <ModalFooter></ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
