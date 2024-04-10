@@ -10,7 +10,36 @@ import { removeAsset } from "@/app/API/creator";
 export default function CreatorDashboard() {
   const [tab, setTab] = useState(0);
   const [ref, setRef] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [assets, setAssets] = useState<any>("");
+
+  const LoadingScreen = () => (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 100,
+      }}
+    >
+      <div
+        style={{
+          border: "6px solid rgba(255, 255, 255, 0.2)",
+          borderTop: "6px solid #fff",
+          borderRadius: "50%",
+          width: "50px",
+          height: "50px",
+          animation: "spin 1s linear infinite",
+        }}
+      ></div>
+    </div>
+  );
 
   useEffect(() => {
     let assets = getAssets();
@@ -30,9 +59,6 @@ export default function CreatorDashboard() {
     url: any;
     index: number;
   }
-
-console.log(assets);
-
 
   const Card = ({ url, name, description, type, index }: cardProps) => {
     let onDelete = async () => {
@@ -66,22 +92,24 @@ console.log(assets);
 
   let mint = async (imageData: any) => {
     console.log(imageData);
-
+    setIsLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:4000/save-images",
         imageData
       );
-      console.log(response.data);
+      console.log(JSON.parse(response.data));
       // Handle success
     } catch (error) {
       console.error("Failed to save images:", error);
       // Handle errors
     }
+    setIsLoading(false);
   };
 
   return (
     <div className="dashboard">
+      {isLoading && <LoadingScreen />}
       <div className="flex">
         {tabs.map((t, index) => (
           <div
