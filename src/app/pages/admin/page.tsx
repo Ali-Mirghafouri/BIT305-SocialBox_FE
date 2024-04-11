@@ -15,6 +15,8 @@ import {
 import { useAsyncList } from "@react-stately/data";
 import { useState } from "react";
 import "../../output.css";
+import { getCollections } from "@/app/API/collection";
+import { img } from "@/app/assets";
 
 interface CardProps {
   title: string;
@@ -33,51 +35,52 @@ const CardList = [
   {
     title: "Volume",
     desc: "Total NFT Volume Today:",
-    value: "1,500",
+    value: "0",
   },
   {
     title: "Sales Velocity",
     desc: "(Last 24 Hours):",
-    value: "120",
+    value: "0",
     alt: "NFTs per hour",
   },
   {
     title: "Average Selling Price",
     desc: "This Week:",
-    value: "0.5",
+    value: "0",
   },
 ];
 
-const CreatorList = [
-  {
-    img: "",
-    name: "Eka Prakasa",
-    sales: "13.2K",
-  },
-  {
-    img: "",
-    name: "Emil Tirtayasa Sinaga ",
-    sales: "13.1K",
-  },
-  {
-    img: "",
-    name: "Dodo Opung Utama",
-    sales: "12.5K",
-  },
-  {
-    img: "",
-    name: "Aks Alana",
-    sales: "11.0K",
-  },
-  {
-    img: "",
-    name: "Lily Dartema",
-    sales: "10.9K",
-  },
-];
+// const CreatorList = [
+//   {
+//     img: "",
+//     name: "Eka Prakasa",
+//     sales: "13.2K",
+//   },
+//   {
+//     img: "",
+//     name: "Emil Tirtayasa Sinaga ",
+//     sales: "13.1K",
+//   },
+//   {
+//     img: "",
+//     name: "Dodo Opung Utama",
+//     sales: "12.5K",
+//   },
+//   {
+//     img: "",
+//     name: "Aks Alana",
+//     sales: "11.0K",
+//   },
+//   {
+//     img: "",
+//     name: "Lily Dartema",
+//     sales: "10.9K",
+//   },
+// ];
 
 export default function Admin() {
   const [isLoading, setIsLoading] = useState(true);
+  const [CreatorList, setCreatorList] = useState<any>([]);
 
   const Card = ({ title, desc, value, alt }: CardProps) => {
     return (
@@ -101,24 +104,56 @@ export default function Admin() {
     return (
       <div className={styles.creator_card}>
         <Image src={img} alt={name} className={styles.creator_card_img} />
-        <div>
+        <div className={styles.creator_card_m}>
           <div className={styles.creator_card_name}>{name}</div>
-          <div className={styles.creator_card_sales}>{sales}</div>
+          <div className={styles.creator_card_sales}>Amount of sales: {sales}</div>
         </div>
       </div>
     );
   };
 
   let list = useAsyncList({
-    async load({ signal }) {
-      let res = await fetch("https://swapi.py4e.com/api/people/?search", {
-        signal,
+    async load() {
+      let cols: any;
+      await getCollections().then((data) => {
+        cols = data;
       });
-      let json = await res.json();
       setIsLoading(false);
 
+      console.log(cols);
+
+      let tempval: any = [];
+
+      const seenCreators = new Set();
+      const filteredArray = cols.filter((obj: any) => {
+        const isDuplicate = seenCreators.has(obj.creator);
+        seenCreators.add(obj.creator);
+        return !isDuplicate;
+      });
+
+      let tempCreator: any = [];
+
+      for (let index = 0; index < filteredArray.length; index++) {
+        tempCreator.push({
+          img: img.userImg,
+          name: filteredArray[index].creator,
+          sales: "0",
+        });
+      }
+
+      setCreatorList([...tempCreator]);
+
+      for (let index = 0; index < cols.length; index++) {
+        tempval.push({
+          number: index + 1,
+          creator: cols[index].creator,
+          projName: cols[index].collectionName,
+          noNFT: cols[index].NFTs.length,
+        });
+      }
+
       return {
-        items: json.results,
+        items: tempval,
       };
     },
     async sort({ items, sortDescriptor }: any) {
@@ -164,17 +199,17 @@ export default function Admin() {
             }}
           >
             <TableHeader>
-              <TableColumn key="name" allowsSorting>
-                Name
+              <TableColumn key="number" allowsSorting>
+                Number
               </TableColumn>
-              <TableColumn key="height" allowsSorting>
-                Height
+              <TableColumn key="creator" allowsSorting>
+                Creator
               </TableColumn>
-              <TableColumn key="mass" allowsSorting>
-                Mass
+              <TableColumn key="projName" allowsSorting>
+                Project Name
               </TableColumn>
-              <TableColumn key="birth_year" allowsSorting>
-                Birth year
+              <TableColumn key="noNFT" allowsSorting>
+                Number of NFT's
               </TableColumn>
             </TableHeader>
             <TableBody
@@ -183,7 +218,7 @@ export default function Admin() {
               loadingContent={<Spinner label="Loading..." />}
             >
               {(item: any) => (
-                <TableRow key={item.name}>
+                <TableRow key={item.number}>
                   {(columnKey) => (
                     <TableCell>{getKeyValue(item, columnKey)}</TableCell>
                   )}
@@ -195,7 +230,7 @@ export default function Admin() {
         <div className={styles.creator}>
           <div className={styles.creator_title}>Creators of the week</div>
           <div className={styles.creator_card_container}>
-            {CreatorList.map(({ img, sales, name }, index) => (
+            {CreatorList.map(({ img, sales, name }: any, index:number) => (
               <Creator img={img} sales={sales} name={name} key={name + index} />
             ))}
           </div>

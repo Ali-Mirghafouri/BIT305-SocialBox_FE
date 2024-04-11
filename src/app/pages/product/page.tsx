@@ -2,47 +2,34 @@
 
 import "./product.css";
 import "../buyerHomePage/buyerHomePage.css";
-import { img } from "@/app/assets";
 import { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
+import axios from "axios";
+import Image from "next/image";
 
 interface CardProps {
-  title: string;
-  img: StaticImageData;
-  price: string;
-  author: string;
+  name: string;
+  img_url: string;
+  transaction: string;
 }
 interface FilterProps {
   text: string;
   index: number;
 }
 
-let product = {
-  title: "",
-  description: "",
-  artistName: "",
-  assets: [
-    {
-      title: "",
-      img: "",
-      price: "",
-    },
-  ],
-};
-
 const filters = ["All", "Recent", "Low To High"];
 
-export default function Product() {
+export default function Product(context: any) {
+  const [assets, setAssets] = useState([]);
+  console.log(assets);
+
   const [activeTab, setActiveTab] = useState(0);
-  const [pageNum] = useState(Math.round(product.assets.length / 8));
+  const [pageNum] = useState(Math.round(assets.length / 8));
   const [assetSelector, setAssetSelector] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const [selectedAssets, setSelectedAssets] = useState<any>([
-    ...product.assets,
-  ]);
+  const [selectedAssets, setSelectedAssets] = useState<any>([...assets]);
 
   function Filter({ text, index }: FilterProps) {
     return (
@@ -61,31 +48,47 @@ export default function Product() {
     );
   }
 
-  function Card({ title, img, price, author }: CardProps) {
+  function Card({ name, img_url, transaction }: CardProps) {
+    const onView = async (trans: string) => {
+      const response = await axios.post("http://localhost:4000/getTokenID", {
+        data: trans,
+      });
+      console.log(response);
+      let res = response.data.data;
+      let a = document.createElement("a");
+      a.href =
+        "https://opensea.io/assets/matic/" +
+        res.contract_address +
+        "/" +
+        res.token_id;
+      a.target = "_blank";
+      a.click();
+    };
+
     return (
       <Link href={"/pages/product"}>
         <div>
           <Image
-            src={img}
+            src={img_url}
             alt="../../assets/images/neon.png"
             width={250}
             height={150}
             className="buyerPage_card_img"
           />
           <div className="buyerPage_card">
-            <div className="buyerPage_card_title">{title}</div>
-            <div className="buyerPage_card_author">{author}</div>
+            <div className="buyerPage_card_title">{name}</div>
+            {/* <div className="buyerPage_card_author">{author}</div> */}
             <hr />
             <div className="flex">
               <div className="buyerPage_card_bidding">Open bidding</div>
               <div className="flex_grow" />
-              <div className="buyerPage_card_price">{price}</div>
+              {/* <div className="buyerPage_card_price">{price}</div> */}
             </div>
             <button
-              // onClick={() => onDelete(index)}
+              onClick={() => onView(transaction)}
               className="dashboard_mint_button"
             >
-              Buy!
+              View!
             </button>
           </div>
         </div>
@@ -246,23 +249,27 @@ export default function Product() {
   }
 
   useEffect(() => {
+    if (context.searchParams.nfts) {
+      setAssets(JSON.parse(context.searchParams.nfts));
+    }
+  }, []);
+
+  useEffect(() => {
     let tempAssets: any = [];
     for (let index = assetSelector; index < assetSelector + 8; index++) {
-      product.assets[index]
-        ? tempAssets.push(product.assets[index])
-        : undefined;
+      assets[index] ? tempAssets.push(assets[index]) : undefined;
     }
     setSelectedAssets([...tempAssets]);
   }, []);
   useEffect(() => {
     let tempAssets: any = [];
     for (let index = assetSelector; index < assetSelector + 8; index++) {
-      product.assets[index]
-        ? tempAssets.push(product.assets[index])
-        : undefined;
+      assets[index] ? tempAssets.push(assets[index]) : undefined;
     }
+    console.log(tempAssets);
+
     setSelectedAssets([...tempAssets]);
-  }, [activeTab, activePage]);
+  }, [activeTab, activePage, assets]);
 
   return (
     <div className="buyerPage ">
@@ -275,13 +282,12 @@ export default function Product() {
         </div>
         <div className="buyerPage_imgList">
           {selectedAssets.map(
-            ({ author, img, price, title }: CardProps, index: any) => (
+            ({ img_url, name, transaction }: CardProps, index: any) => (
               <Card
-                author={author}
-                img={img}
-                price={price}
-                title={title}
-                key={title + index}
+                img_url={img_url}
+                name={name}
+                key={name + index}
+                transaction={transaction}
               />
             )
           )}
@@ -289,7 +295,7 @@ export default function Product() {
         <div className="flex buyerPage_bottom_container">
           <div className="buyerPage_result">
             {"Results " + (assetSelector + 1) + " - " + (assetSelector + 8)}
-            <span>{" out of " + product.assets.length}</span>
+            <span>{" out of " + assets.length}</span>
           </div>
           <div className="flex_grow" />
           <div className="buyerPage_page">

@@ -13,6 +13,17 @@ interface setCollection {
   }[];
 }
 
+interface collectionProps {
+  NFTs: {
+    img_url: string;
+    name: string;
+    transaction: string;
+  }[];
+  collectionName: string;
+  creator: string;
+  creatorEmail: string;
+}
+
 export const setCollection = async (props: setCollection) => {
   const dbRef = ref(database);
 
@@ -41,7 +52,20 @@ export const setCollection = async (props: setCollection) => {
 export const getCollections = async () => {
   console.log("here");
   const dbRef = ref(database);
-  let collections;
+  let collections: collectionProps[] = [
+    {
+      collectionName: "",
+      creator: "",
+      creatorEmail: "",
+      NFTs: [
+        {
+          img_url: "",
+          name: "",
+          transaction: "",
+        },
+      ],
+    },
+  ];
   await get(child(dbRef, "collections"))
     .then((snapshot) => {
       console.log(snapshot.val());

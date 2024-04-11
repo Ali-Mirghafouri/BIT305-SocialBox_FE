@@ -7,12 +7,19 @@ import { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Link from "next/link";
+import { getCollections } from "@/app/API/collection";
 
 interface CardProps {
   title: string;
   img: StaticImageData;
   price: string;
   author: string;
+  index: number;
+  nfts: {
+    img_url: string;
+    name: string;
+    transaction: string;
+  }[];
 }
 interface FilterProps {
   text: string;
@@ -20,514 +27,8 @@ interface FilterProps {
 }
 
 export default function BuyerHomePage() {
-  const assets = [
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 2",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 3",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 4",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 5",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 6",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 7",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 8",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 9",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 10",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 11",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 12",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 13",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 14",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 15",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 16",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 17",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 18",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-    {
-      img: img.neon,
-      title: "Neon Aliens",
-      author: "Creator 1",
-      price: "0.9 ETH",
-    },
-  ];
-
   const [activeTab, setActiveTab] = useState(0);
+  const [assets, setAssets] = useState<any>([]);
   const [assetSelector, setAssetSelector] = useState(0);
   const [pageNum] = useState(Math.round(assets.length / 8));
   const [activePage, setActivePage] = useState(1);
@@ -552,9 +53,9 @@ export default function BuyerHomePage() {
     );
   }
 
-  function Card({ title, img, price, author }: CardProps) {
+  function Card({ title, img, price, author, index, nfts }: CardProps) {
     return (
-      <Link href={"/pages/product"}>
+      <Link href={{ pathname: "/pages/product", query: { nfts: JSON.stringify(nfts) } }}>
         <div>
           <Image
             src={img}
@@ -735,6 +236,22 @@ export default function BuyerHomePage() {
     for (let index = assetSelector; index < assetSelector + 8; index++) {
       assets[index] ? tempAssets.push(assets[index]) : undefined;
     }
+    getCollections().then((data) => {
+      let temp: any = [];
+      for (let index = 0; index < data.length; index++) {
+        temp.push({
+          author: data[index].creator,
+          img: data[index].NFTs[0].img_url,
+          title: data[index].collectionName,
+          price: "0.9ETH",
+          nfts: data[index].NFTs,
+        });
+      }
+      console.log(temp);
+
+      setAssets([...temp]);
+    });
+
     setSelectedAssets([...tempAssets]);
   }, []);
   useEffect(() => {
@@ -743,7 +260,7 @@ export default function BuyerHomePage() {
       assets[index] ? tempAssets.push(assets[index]) : undefined;
     }
     setSelectedAssets([...tempAssets]);
-  }, [activeTab, activePage]);
+  }, [activeTab, activePage, assets]);
 
   return (
     <div className="buyerPage ">
@@ -756,13 +273,15 @@ export default function BuyerHomePage() {
         </div>
         <div className="buyerPage_imgList">
           {selectedAssets.map(
-            ({ author, img, price, title }: CardProps, index: any) => (
+            ({ author, img, price, title, nfts }: CardProps, index: any) => (
               <Card
                 author={author}
                 img={img}
                 price={price}
                 title={title}
                 key={title + index}
+                index={index}
+                nfts={nfts}
               />
             )
           )}
